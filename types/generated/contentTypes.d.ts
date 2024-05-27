@@ -382,6 +382,11 @@ export interface ApiAlbumAlbum extends Schema.CollectionType {
       'api::profile.profile'
     >;
     Artist: Attribute.String;
+    photo: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'api::photo.photo'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -393,6 +398,42 @@ export interface ApiAlbumAlbum extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::album.album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPhotoPhoto extends Schema.CollectionType {
+  collectionName: 'photos';
+  info: {
+    singularName: 'photo';
+    pluralName: 'photos';
+    displayName: 'Photo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String;
+    url: Attribute.String;
+    album: Attribute.Relation<
+      'api::photo.photo',
+      'oneToOne',
+      'api::album.album'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::photo.photo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::photo.photo',
       'oneToOne',
       'admin::user'
     > &
@@ -874,6 +915,7 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::album.album': ApiAlbumAlbum;
+      'api::photo.photo': ApiPhotoPhoto;
       'api::profile.profile': ApiProfileProfile;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;

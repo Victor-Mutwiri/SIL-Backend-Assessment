@@ -26,6 +26,12 @@
     },
     "Artist": {
       "type": "string"
+    },
+    "photo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::photo.photo",
+      "mappedBy": "album"
     }
   }
 }
